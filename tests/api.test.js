@@ -46,7 +46,7 @@ test("GET health check returns an ok response", async () => {
   assert.equal(payload.service, "alice-gemini-serper");
 });
 
-test("launch request returns a valid Alice greeting without external API keys", async () => {
+test("missing storage returns a valid Alice setup message without external API keys", async () => {
   const handler = (await import("../api/index.js")).default;
   let statusCode = 200;
   let payload;
@@ -58,6 +58,6 @@ test("launch request returns a valid Alice greeting without external API keys", 
   await handler({ method: "POST", body: { request: { command: "" }, state: { session: { history: [] } } } }, res);
   assert.equal(statusCode, 200);
   assert.equal(payload.version, "1.0");
-  assert.match(payload.response.text, /Привет/);
+  assert.match(payload.response.text, /подключить хранилище/);
   assert.equal(payload.response.end_session, false);
 });
